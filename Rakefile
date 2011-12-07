@@ -10,7 +10,7 @@ end
 
 require 'rake'
 require 'rake/testtask'
-require 'rake/rdoctask'
+require 'rdoc/task'
 require 'rake/gempackagetask'
 require 'support/gateway_support'
 require 'support/outbound_hosts'
