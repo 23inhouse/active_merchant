@@ -41,6 +41,10 @@ module ActiveMerchant #:nodoc:
         commit 'DoExpressCheckoutPayment', build_sale_or_authorization_request('Sale', money, options)
       end
 
+      def get_balance(options = {})
+        commit 'GetBalance', build_get_balance_request(options)
+      end
+
       private
       def build_get_details_request(token)
         xml = Builder::XmlMarkup.new :indent => 2
@@ -153,6 +157,18 @@ module ActiveMerchant #:nodoc:
               
               xml.tag! 'n2:LocaleCode', options[:locale] unless options[:locale].blank?
             end
+          end
+        end
+
+        xml.target!
+      end
+      
+      def build_get_balance_request(options)
+        xml = Builder::XmlMarkup.new :indent => 2
+        xml.tag! 'GetBalanceReq', 'xmlns' => PAYPAL_NAMESPACE do
+          xml.tag! 'GetBalanceRequest', 'xmlns:n2' => EBAY_NAMESPACE do
+            xml.tag! 'n2:Version', API_VERSION
+            xml.tag! 'n2:ReturnAllCurrencies', '1'
           end
         end
 
